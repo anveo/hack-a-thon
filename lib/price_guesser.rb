@@ -1,5 +1,3 @@
-require 'csv'
-
 class PriceGuesser
   def initialize(csv_file: 'items.csv')
     @items = []
