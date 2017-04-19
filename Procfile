@@ -1,1 +1,1 @@
-app: rerun -- "puma app.ru"
+app: rerun -- "puma config.ru"
