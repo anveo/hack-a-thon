@@ -9,7 +9,7 @@ require 'httplog'
 require_relative './price_guesser'
 require_relative './price_scrambler_handler'
 
-$game = PriceGuesser.new(csv_file: 'test.csv') # rubocop:disable Style/ClassVars
+$game = PriceGuesser.new(csv_file: 'items.csv') # rubocop:disable Style/ClassVars
 
 class App < Sinatra::Base
   configure do
