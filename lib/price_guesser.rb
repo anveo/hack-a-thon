@@ -43,7 +43,7 @@ class PriceGuesser
     item = @items.find { |i| i[:level] == game[:level] }
     return false unless item
 
-    "The item is #{item[:item]}. The digits are #{item[:answer].to_s.chars.join(' ')}"
+    "The item is #{item[:item]}. The digits are #{item[:answer].to_s.chars.join(', ')}"
   end
 
   private
