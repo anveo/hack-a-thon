@@ -24,3 +24,6 @@ RSpec/MultipleExpectations:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
