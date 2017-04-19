@@ -39,10 +39,12 @@ class App < Sinatra::Base
 
     handler = PriceScramblerHandler.new(
       application_id: ENV['APPLICATION_ID'],
-      logger: logger
+      logger: logger,
+      skip_signature_validation: true
     )
 
     begin
+      # logger.info request.body.read
       handler.handle(request.body.read, @headers)
     rescue AlexaSkillsRuby::Error => e
       logger.error e
@@ -53,22 +55,22 @@ class App < Sinatra::Base
 
   post '/start' do
     session_id = @request_payload['session_id']
-    @@guesser.start(session_id: session_id)
+    $game.start(session_id: session_id)
     200
   end
 
   post '/guess' do
     session_id = @request_payload['session_id']
     val        = @request_payload['value']
-    res        = @@guesser.guess(session_id: session_id, value: val)
+    res        = $game.guess(session_id: session_id, value: val)
 
-    q = @@guesser.current_question(session_id: session_id)
+    q = $game.current_question(session_id: session_id)
     puts q
 
     status res ? 200 : 400
   end
 
   get '/state' do
-    @@guesser.to_json
+    $game.to_json
   end
 end
