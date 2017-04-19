@@ -1,5 +1,6 @@
 ## To Run
 
+    $ cp .env.example .env # update values as needed
     $ bundle install
     $ bundle exec foreman start
 

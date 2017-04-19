@@ -2,6 +2,7 @@ require 'sinatra'
 require 'alexa_skills_ruby'
 require 'active_support/all'
 require 'csv'
+require 'dotenv/load'
 
 require_relative './price_guesser'
 require_relative './price_scrambler_handler'

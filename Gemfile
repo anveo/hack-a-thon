@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'activesupport'
 gem 'alexa_skills_ruby'
+gem 'dotenv'
 gem 'puma'
 gem 'sinatra'
 
