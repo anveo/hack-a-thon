@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'activesupport'
-gem 'sinatra'
 gem 'alexa_skills_ruby'
+gem 'puma'
+gem 'sinatra'
 
 group :development, :test do
   gem 'foreman'

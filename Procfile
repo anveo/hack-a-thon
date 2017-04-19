@@ -1,1 +1,1 @@
-app: rerun rackup
+app: rerun -- "puma app.ru"
