@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'activesupport'
 gem 'alexa_skills_ruby'
 gem 'dotenv'
+gem 'httplog'
 gem 'puma'
 gem 'sinatra'
 

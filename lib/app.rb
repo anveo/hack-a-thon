@@ -4,20 +4,26 @@ require 'active_support/all'
 require 'csv'
 require 'dotenv/load'
 
+require 'httplog'
+
 require_relative './price_guesser'
 require_relative './price_scrambler_handler'
+
+$game = PriceGuesser.new(csv_file: 'test.csv') # rubocop:disable Style/ClassVars
 
 class App < Sinatra::Base
   configure do
     enable :logging
-    @@guesser = PriceGuesser.new(csv_file: 'test.csv') # rubocop:disable Style/ClassVars
+    # @@guesser = PriceGuesser.new(csv_file: 'test.csv') # rubocop:disable Style/ClassVars
   end
 
   before do
     begin
-      request.body.rewind
-      @request_payload = JSON.parse request.body.read
-      @session_id      = @request_payload['session_id']
+      # require 'pry'
+      # binding.pry
+      # request.body.rewind
+      # @request_payload = JSON.parse request.body.read
+      # @session_id      = @request_payload['session_id']
       @headers         = {
         'Signature'             => request.env['HTTP_SIGNATURE'],
         'SignatureCertChainUrl' => request.env['HTTP_SIGNATURECERTCHAINURL']
