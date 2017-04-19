@@ -1,11 +1,20 @@
 require 'sinatra'
+require 'alexa_skills_ruby'
 require 'active_support/all'
 
 require_relative './price_guesser'
+require_relative './price_scrambler_handler'
 
 class App < Sinatra::Base
   configure do
     @@guesser = PriceGuesser.new(csv_file: 'test.csv') # rubocop:disable Style/ClassVars
+    @@logger ||= Logger.new($stdout).tap do |logger|
+      logger.progname = 'Hack-A-Thon'
+    end
+    @@handler = PriceScramblerHandler.new(
+      application_id: ENV['APPLICATION_ID'],
+      logger: @logger
+    )
   end
 
   before do
@@ -13,9 +22,24 @@ class App < Sinatra::Base
       request.body.rewind
       @request_payload = JSON.parse request.body.read
       @session_id      = @request_payload['session_id']
+      @headers         = {
+        'Signature' => request.env['HTTP_SIGNATURE'],
+        'SignatureCertChainUrl' => request.env['HTTP_SIGNATURECERTCHAINURL']
+      }
     rescue JSON::ParserError
       @request_payload = {}
       @session_id      = nil
+    end
+  end
+
+  post '/' do
+    content_type :json
+    begin
+      @@handler.handle(request.body.read, @headers)
+    rescue AlexaSkillsRuby::Error => error
+      @@logger.error e
+      @@logger.error e.backtrace.join("\n")
+      403
     end
   end
 

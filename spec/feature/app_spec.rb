@@ -6,6 +6,11 @@ describe App do
 
   let(:app) { described_class.new }
 
+  it 'has working / path' do
+    post '/', {session_id: 123}.to_json
+    expect(last_response).to be_ok
+  end
+
   it 'has working golden path' do
     # initialze game
     post '/start', { session_id: 123 }.to_json

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'activesupport'
 gem 'sinatra'
+gem 'alexa_skills_ruby'
 
 group :development, :test do
   gem 'guard-rspec'
