@@ -9,6 +9,7 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
 
     $game.start(session_id: session_id)
     speech_text = $game.current_question(session_id: session_id)
+    response.should_end_session = false
     response.set_output_speech_text(speech_text)
   end
 
@@ -26,6 +27,7 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
       speech_text << 'Stupid human! You are wrong. Try again.'
     end
 
+    response.should_end_session = false
     response.set_output_speech_text(speech_text)
   end
 
