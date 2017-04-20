@@ -41,6 +41,6 @@ class Game
   private
 
   def question
-    @questions[@level]
+    @questions[@level - 1]
   end
 end
