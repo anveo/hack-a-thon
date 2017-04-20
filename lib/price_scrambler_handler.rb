@@ -37,6 +37,11 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
     response.set_output_speech_text("#{GREETING} #{game.current_question}")
   end
 
+  on_intent('AMAZON.StopIntent') do
+    response.set_output_speech_text('Thanks for playing. Quitter')
+    response.should_end_session = true
+  end
+
   on_intent('AnswerIntent') do
     slots = request.intent.slots
     answer = slots['Answer'].to_i
