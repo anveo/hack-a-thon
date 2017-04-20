@@ -34,7 +34,7 @@ class Game
 
   def current_question
     item = question.item
-    digits = question.answer.to_s.chars.join(', ')
+    digits = question.answer.to_s.chars.shuffle.join(', ')
     "The item is #{item}. The digits are #{digits}"
   end
 
