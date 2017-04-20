@@ -12,6 +12,21 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
     begin.
   HEREDOC
 
+  GOOD_SNARKY_COMMENTS = [
+    "You're not a complete failure.",
+    "You must be so proud.",
+    "You're such a talent.",
+    "Your mother must be so proud.",
+  ]
+
+  BAD_SNARKY_COMMENTS = [
+    'Please stop being such a stupid human.',
+    'How are you this incompetent?',
+    'How is it this difficult for you?',
+    'I wonder if you struggle to determine your worth like I do.',
+    'I always knew you would fail'
+  ]
+
   on_session_start do
     logger.info 'Starting Session!'
   end
@@ -30,17 +45,17 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
 
     if game.over?
       if game.won?
-        message_to_send << "Congratulations! You're not a complete failure. You have won the Price Scrambler game! You must be so proud."
+        message_to_send << "Congratulations! #{select_good_snarky_comment} You have won the Price Scrambler game! #{select_good_snarky_comment}"
       elsif game.lost?
-        message_to_send << "You lost the Price Scrambler game. Please stop being such a stupid human."
+        message_to_send << "Incorrect! You have lost the Price Scrambler game. #{select_bad_snarky_comment}"
       end
       response.should_end_session = true
     else
       if answer_was_correct
-        message_to_send << "Correct! You're so talented. Proceeding to the next item. "
+        message_to_send << "Correct! #{select_good_snarky_comment} Proceeding to the next item. "
         message_to_send << game.current_question
       else
-        message_to_send << 'Stupid human! You are wrong. Try again.'
+        message_to_send << "Incorrect! #{select_bad_snarky_comment} Try again."
       end
       response.should_end_session = false
     end
@@ -56,5 +71,13 @@ class PriceScramblerHandler < AlexaSkillsRuby::Handler
 
   def game
     @game ||= $game_manager.find_or_create_game_by_session_id(session.session_id)
+  end
+
+  def select_bad_snarky_comment
+    BAD_SNARKY_COMMENTS.sample
+  end
+
+  def select_good_snarky_comment
+    GOOD_SNARKY_COMMENTS.sample
   end
 end
